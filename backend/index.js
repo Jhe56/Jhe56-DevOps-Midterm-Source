@@ -6,18 +6,21 @@ const app = express();
 
 //changed host and password to gpt recommended env host set at compose
 const db = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    user: "root",
-    password: process.env.MYSQL_PASSWORD,
-    database: "test",
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 })
 
 //added from gpt in case db inits slower than backend
 //implements retry
 let retryCount = 0
+const MAX_RETRIES = 10
+const RETRY_DELAY_MS = 5000
+
 function connectWithRetry() {
   db.getConnection((err, connection) => {
     if (err) {
