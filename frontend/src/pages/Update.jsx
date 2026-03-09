@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+//so we can run --build-arg http://EC2_PUBLIC_DNS:8800 
+const API = import.meta.env.VITE_URL || "http://localhost:8800"
+
 //rafce
 const Update = () => {
 
@@ -27,7 +31,7 @@ const Update = () => {
    const handleClick = async e =>{
     e.preventDefault()
     try{
-        await axios.put("http://localhost:8800/books/"+ bookID, book)
+        await axios.put(`${API}/books`+ bookID, book)
         navigate("/")
     }catch(err){
         console.log(err)

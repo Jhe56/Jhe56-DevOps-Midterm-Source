@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+const API = import.meta.env.VITE_URL || "http://localhost:8800"
+
 //rafce
 const Add = () => {
 
@@ -20,7 +23,7 @@ const Add = () => {
    const handleClick = async e =>{
     e.preventDefault()
     try{
-        await axios.post("http://localhost:8800/books", book)
+        await axios.post(`${API}/books`, book)
         navigate("/")
     }catch(err){
         console.log(err)
