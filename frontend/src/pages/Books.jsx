@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 //so we can run --build-arg http://EC2_PUBLIC_DNS:8800 
-const API = import.meta.env.VITE_URL || "http://localhost:8800"
+// const API = import.meta.env.VITE_URL || "http://localhost:8800"
 
 //rafce
 const Books = () => {
@@ -13,7 +13,7 @@ const [books, setBooks] = useState([])
 useEffect(()=>{
 const fetchAllBooks = async ()=>{
     try {
-      const res = await axios.get(`${API}/books`)  
+      const res = await axios.get("http://13.222.50.153:8800/books")  
       setBooks(res.data)
       console.log(res)
     }catch(err){
@@ -26,7 +26,7 @@ fetchAllBooks()
 
 const handleDelete = async (id)=>{
     try{
-    await axios.delete(`${API}/books`+id)
+    await axios.delete("http://13.222.50.153:8800/books"+id)
     window.location.reload()
     }catch(err){
         console.log(err)
